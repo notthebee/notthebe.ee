@@ -1,0 +1,10 @@
+base_url = "https://notthebe.ee/"
+title = "Wolfgang's Blog"
+compile_sass = true
+build_search_index = true
+
+[markdown]
+highlight_code = true
+
+[extra]
+date_format = "%a %b %e, %Y"
