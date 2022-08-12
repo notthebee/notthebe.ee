@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import url('colors.css');
+@import url('syntax-theme.css');
+
 html {
 	font-size: 100%;
 	overflow-y: scroll;
@@ -5,33 +9,13 @@ html {
 	-ms-text-size-adjust: 100%;
 }
 
-:root {
-	--bg: #fefefe;
-	--fg: #000;
-	--link: #0645ad;
-	--link_v: #0b0080;
-	--link_h: #06e;
-	--bg_grey: #f5f5f5;
-	--dark_grey: #999;
-}
-[data-theme="dark"] {
-	--bg: #151515;
-	--fg: #fefefe;
-	--link: #4d7dcb;
-	--link_v: #99a5d3;
-	--link_h: #4c7ecf;
-	--bg_grey: #222;
-	--dark_grey: #333;
-}
-
-
 .logo {
 	max-height: 30px
 }
 
 body {
 	color: var(--fg);
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 12px;
 	line-height: 1.5em;
 	padding: 1em;
@@ -45,26 +29,16 @@ a {
 	text-decoration: none;
 }
 
-a:visited {
-	color: var(--link_v);
-}
+#darkmodetoggle:hover {
+	text-decoration: none;
 
-a:hover {
-	color: var(--link_h);
-	cursor:pointer;
-}
-
-a:active {
-	color: var(--link_h);
-}
-
-a:focus {
-	outline: thin dotted;
 }
 
 a:hover,
 a:active {
 	outline: 0;
+	cursor: pointer;
+	text-decoration: underline;
 }
 
 p {
@@ -139,8 +113,8 @@ code {
 	white-space: pre;
 	white-space: pre-wrap;
 	word-wrap: break-word;
-	background: var(--bg_grey);
-	color: var(--fg);
+	background: var(--code_bg);
+	color: var(--code_fg);
 	padding: 3px;
 	border-radius: 5px;
 }

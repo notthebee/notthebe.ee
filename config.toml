@@ -5,6 +5,11 @@ build_search_index = true
 
 [markdown]
 highlight_code = true
+highlight_theme = "css"
+highlight_themes_css = [
+  { theme = "nord", filename = "syntax-theme-dark.css" },
+]
+
 
 [extra]
 date_format = "%a %b %e, %Y"
