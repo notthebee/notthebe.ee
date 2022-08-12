@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wolfgang&#x27;s Blog</title>
+    <link rel="stylesheet" href="https://notthebe.ee/style.css?h=fbf5c14185256ee77d1a516f3a46e01b07b5964c154993d01bce5f2633821c04" />
+    <link rel="shortcut icon" type="image/png" href="https://notthebe.ee/favicon.png"/>
+    <script
+      src="https://kit.fontawesome.com/93866eaaa9.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+    <nav class="menu">
+      <div class="nav-left">
+        <ul>
+          <li>
+            <a href="/"
+              ><img class="logo" src="https://notthebe.ee/favicon.png" alt="" /><span
+                class="sitename"
+                >wolfgang&#x27;s blog</span
+              ></a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <ul>
+          <li style="padding: 9px">
+            <a
+              id="darkmodetoggle"
+              class="fas fa-moon"
+              onclick="switchTheme()"
+            ></a>
+          </li>
+          <li><a href="mailto:wolfgangschannel@mailbox.org">contact</a></li>
+          <li><a href="impressum.html">impressum</a></li>
+          <li><a target="_blank" href="https://patreon.com/WolfgangsChannel">patreon</a></li>
+          <li><a target="_blank" href="https://github.com/notthebee">github</a></li>
+          <li><a target="_blank" href="https://twitter.com/notthebeeee">twitter</a></li>
+          <li><a target="_blank" href="https://youtube.com/c/WolfgangsChannel">videos</a></li>
+        </ul>
+      </div>
+    </nav>
+
+  <body>
+    <section class="section">
+      <div class="container">
+<h1 class="title">
+  Removing the Wi-Fi whitelist on Haswell Thinkpads (T440p, W540, T540, etc.)
+</h1>
+<p class="date">2020-06-17</p>
+<p><a href="https://www.youtube.com/watch?v=ce7kqUEccUM">Video version</a></p>
+<p>&quot;Wi-Fi whitelist&quot; functionality has been introduced by Lenovo in 2012 to keep users from replacing Wifi cards on their Thinkpad laptops. If you try to install a card that wasn't approved by Lenovo, your laptop will <strong>simply refuse to boot</strong></p>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/unauthorized.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/unauthorized.png" alt="Unauthorized Wi-Fi card">
+    </a>
+</div>
+<h2 id="disclaimer">Disclaimer</h2>
+<ol>
+<li>This process is quite involved and requires at least a basic knowledge of Google and a steady hand. I provide zero warranty in case something goes wrong. This tutorial is fairly safe if you follow it carefully, but I'm not responsible for your laptop refusing to boot, taking fire, or shrinking in size.</li>
+<li>I'll be working on a <strong>Thinkpad T440p with BIOS version 2.52</strong>. I do not know whether it's going to work on other BIOS versions or any other Haswell Thinkpads since I only have T440p, but it's been reported to work on W540 and T540. The only way to find out is to try, and if something goes wrong you can always re-flash the original BIOS file.</li>
+<li>This process <strong>does not</strong> remove the BIOS or Supervisor password</li>
+</ol>
+<h2 id="gathering-supplies">Gathering supplies</h2>
+<p>Apart from the laptop itself, you will also need:</p>
+<ul>
+<li>a second laptop or desktop PC</li>
+<li>a CH341a external programmer with an 8-pin clip, they're usually sold together on websites like <a href="https://www.ebay.com/itm/EEPROM-BIOS-USB-Programmer-CH341A-SOIC8-Clip-1-8V-Adapter-SOIC8-Adapter/264715247642?hash=item3da242201a:g:JlYAAOSwpSlekDy%7E">eBay</a>, <a href="https://www.amazon.com/Organizer-Socket-Adpter-Programmer-CH341A/dp/B07R5LPTYM/ref=sr_1_1?dchild=1&amp;keywords=ch341a&amp;qid=1592406898&amp;sr=8-1">Amazon</a> or <a href="https://www.aliexpress.com/item/32793476447.html?spm=a2g0o.productlist.0.0.2b689f58oUwIIz&amp;algo_pvid=7552baef-b508-474c-be4a-4d317c72faac&amp;algo_expid=7552baef-b508-474c-be4a-4d317c72faac-0&amp;btsid=0b0a187915924069316147306e79d4&amp;ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_">Aliexpress</a> for about $10.</li>
+</ul>
+<h2 id="assembling-the-programmer">Assembling the programmer</h2>
+<p>Before using the programmer you also need to assemble it. Align the red wire on the clip with number &quot;1&quot; on the adapter, raise the lever on the programmer and plug the clip in the programmer as shown. Put down the lever.</p>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/ch341a_top.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/ch341a_top.png" alt="CH341a – Top view">
+    </a>
+</div>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/ch341a_side.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/ch341a_side.png" alt="CH341a – Side view">
+    </a>
+</div>
+<h2 id="installing-software">Installing software</h2>
+<p>First, we need to install three things on our second computer: <a href="https://flashrom.org/Flashrom">flashrom</a>, <a href="https://github.com/LongSoft/UEFITool/releases">UEFIPatch</a> and <a href="https://github.com/thrimbor/thinkpad-uefi-sign">thinkpad-uefi-sign</a>. You'll also need to download the <a href="https://pastebin.com/TZYnnmY8">text file with patches</a>.</p>
+<p>On Linux you can simply install flashrom from your distro's repositories. On Ubuntu the command is <code>sudo apt install flashrom</code></p>
+<p>If you're on Mac you'll have to install the <a href="https://brew.sh/">Homebrew</a> package manager. After that you can install flashrom by simply typing <code>brew install flashrom</code></p>
+<p>On Windows, using flashrom is somewhat complicated since you'll need a special driver that can't be installed on 64-bit versions of Windows without some tinkering. You can find unofficial versions of flashrom with the USB drivers already included on the Internet, but use them at your own risk. The best option would be to follow this tutorial from an Ubuntu LiveCD.</p>
+<p>Installing UEFIPatch is easy: simply download the right version for your operating system from the Github and unpack it. Remove both text files from the folder to avoid any confusion.</p>
+<p>After that, clone the thinkpad-uefi-sign Github repository or simply download the ZIP and unpack it into the same folder that you used for UEFIPatch.</p>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/folder.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/folder.png" alt="UEFIPatch folder">
+    </a>
+</div>
+<h2 id="preparing-the-patches">Preparing the patches</h2>
+<p>Download the text file with patches from the video description, move it to the UEFIPatch folder and open it with your favorite text editor. Here we're going to put a hash symbol in front of every patch that we don't want to be applied. The two bottom patches that unlock advanced memory settings are already commented out, and since I'll be doing it on a T440p, I'll also comment out the patches for T440 and L540. The file also contains a patch that unlocks the hidden advanced settings in BIOS, but if you don't want that for some reason, put a hash symbol in front of the line. Save the file and quit.</p>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/patches.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/patches.png" alt="Text file with patches">
+    </a>
+</div>
+<h2 id="dumping-the-bios">Dumping the BIOS</h2>
+<p>Turn your laptop upside down, remove the battery and take off the base cover. Take a good look at the motherboard and eventually you'll see a BIOS chip. If you're doing it on a different laptop, your BIOS chip might be at a different location and you might need to take the laptop apart completely to access it.</p>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/chip_location_t440p.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/chip_location_t440p.png" alt="Chip location on T440p">
+    </a>
+</div>
+<p>Next, align the dimple on the top of the chip and the red wire on your programmer clip and put a clip on the chip. Don't plug the USB programmer into your second laptop yet and double check that your battery is removed. Be careful, anchor the clip on one side and then close it in on the other side. Look at it from all sides and make sure the clip sits tightly on the chip.</p>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/dimple.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/dimple.png" alt="Dimple">
+    </a>
+</div>
+<p><div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/clip_on_the_chip_side.jpg" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/clip_on_the_chip_side.jpg" alt="Clip on the chip – side view">
+    </a>
+</div>
+
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/clip_on_the_chip_isometric.jpg" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/clip_on_the_chip_isometric.jpg" alt="Clip on the chip – isometric view">
+    </a>
+</div>
+</p>
+<p>Next up we're going to plug the programmer into our second laptop and open a terminal. Go to UEFIPatch folder and type this command:</p>
+<pre class="z-code"><code><span class="z-text z-plain">sudo flashrom -p ch341a_spi -r bios1.img
+</span></code></pre>
+<p>If you get a &quot;No chip found&quot; error, unplug the USB programmer from the laptop and try to re-seat the clip on the chip. Sometimes the connection isn't strong enough, and usually fiddling with the clip helps.</p>
+<p>After flashrom has finished reading your chip, repeat the same command again, but this time replace the <code>bios1</code> with <code>bios2</code>:</p>
+<pre class="z-code"><code><span class="z-text z-plain">sudo flashrom -p ch341a_spi -r bios2.img
+</span></code></pre>
+<p>Next, we're going to compare the two BIOS dumps to make sure they're identical:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">diff</span></span><span class="z-meta z-function-call z-arguments z-shell"> bios1.img bios2.img</span>
+</span></code></pre>
+<p>If this returns nothing, we're good to go. But if it says &quot;Files are different&quot;, you need to unplug the USB programmer, re-seat the clip on the chip and try again.</p>
+<p>After that's done, you can delete the second file since both  are identical anyway. DO NOT delete the first file, keep it somewhere safe: this is going to be your backup in case something goes wrong.</p>
+<p>Now, unplug the USB programmer so that you don't accidentally yank the clip. You can also leave the clip on the chip, since we'll have to put in back in a minute anyway.</p>
+<h2 id="patching-the-bios">Patching the BIOS</h2>
+<p>Now we're going to patch the BIOS file and remove the Wi-Fi whitelist. Make sure you have UEFIPatch and the BIOS file in the same folder and type</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">./UEFIPatch</span></span><span class="z-meta z-function-call z-arguments z-shell"> bios1.img xx40_patches_v5.txt<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>o</span> bios_patched.img</span>
+</span></code></pre>
+<p>At this point we're pretty much done, but if you try and flash this BIOS file back to the chip, you'll get a laptop that beeps 10 times every time you turn it on. This means that the BIOS is unsigned and somebody tampered with it [I wonder who that was]</p>
+<p>To avoid that, we need to sign the BIOS file. But first, let's install python3 and the <strong>pycryptodome</strong> package. On Mac you can do it by typing</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">brew</span></span><span class="z-meta z-function-call z-arguments z-shell"> install python3</span>
+</span></code></pre>
+<p>And on Linux you'll have to install Python3 using your distro's package manager.</p>
+<p>After that, type</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">pip3</span></span><span class="z-meta z-function-call z-arguments z-shell"> install pycryptodome</span>
+</span></code></pre>
+<p>Next, go to the folder where you unpacked UEFIPatch and thinkpad-uefi-sign and type:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">thinkpad-uefi-sign/sign.py</span></span><span class="z-meta z-function-call z-arguments z-shell"> bios_patched.img<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>o</span> bios_patched.img</span>
+</span></code></pre>
+<p>And there we go, &quot;image signed&quot;. We can also verify the image by typing:</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">thinkpad-uefi-sign/sign.py</span></span><span class="z-meta z-function-call z-arguments z-shell"> bios_patched.img<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>o</span> bios_patched.img</span>
+</span></code></pre>
+<p>As you can see, it says &quot;Signatures correct&quot;</p>
+<p>Now it's time to flash the modded BIOS back to the laptop.</p>
+<h2 id="flash-the-bios">Flash the BIOS</h2>
+<p>Re-connect the USB programmer to your second laptop and in case you removed the clip from the BIOS chip, put it on again.</p>
+<p>The command we need to type now is</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">sudo</span></span><span class="z-meta z-function-call z-arguments z-shell"> flashrom<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>p</span> ch341a_spi<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>w</span> bios_patched.img</span>
+</span></code></pre>
+<p>Wait for it to finish, unplug the USB programmer and remove the clip.</p>
+<p><strong>IMPORTANT</strong>: Unplug the USB programmer FIRST, and THEN remove the clip. You might damage your laptop otherwise.</p>
+<p>Put the lid back on the laptop, slide in the battery and turn the laptop on.</p>
+<p>Verify that the laptop boots to the OS and connects to Wi-Fi networks.</p>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/wifi.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/wifi.png" alt="Wifi networks">
+    </a>
+</div>
+<p>Congratulations! Your laptop is now free... as in connecting to all the Wi-Fi networks, I guess.</p>
+<p>If you take a look at the BIOS menu, you'll also see a bunch of new settings such as power limits, ACPI states and so on. Have fun!</p>
+<div class="post__image">
+    <a href="https://notthebe.ee/blog/removing-the-wifi-whitelist/bios.png" class="image-link" target="_blank">
+        <img src="https://notthebe.ee/blog/removing-the-wifi-whitelist/bios.png" alt="Advanced BIOS settings">
+    </a>
+</div>
+<h2 id="special-thanks">Special thanks</h2>
+<ul>
+<li>Thrimbor <a href="https://github.com/thrimbor">https://github.com/thrimbor</a></li>
+<li>tonymacx86 <a href="https://www.tonymacx86.com/">https://www.tonymacx86.com/</a></li>
+<li>XX and paranoidbashthot for developing the BootGuard bypass method and patches for xx40 onwards <a href="https://github.com/digmorepaka/thinkpad-firmware-patches/">https://github.com/digmorepaka/thinkpad-firmware-patches/</a></li>
+</ul>
+
+</div>
+    </section>
+
+
+
+<footer>
+	<p>Powered by <a target="_blank" href="https://www.getzola.org/">Zola</a></p>
+</footer>
+<script
+
+  src="https://notthebe.ee/darktheme.js?h=4694dd1e43b553665547227c7aba0988568279162707d80d7503e8ece14e8c77"
+  crossorigin="anonymous"
+></script>
+
+  </body>
+
+
+</html>
