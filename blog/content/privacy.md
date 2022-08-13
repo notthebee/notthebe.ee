@@ -3,9 +3,20 @@ title = "Privacy"
 template = "page.html"
 +++
 
-## Privacy and data collection
+# Privacy and data collection
 
-This website runs on Nginx, which collects access logs by default. These logs
-are kept for 24 hours.
+## Responsible entity
+See [Imprint](/impressum)
 
-In order to store your theme preferences (dark or light), this website stores a variable named `theme` (with a value of either `dark` or `light`) in the local storage of your browser. localStorage does not have an expiration time and is not cleared automatically (unless configured by the user).
+## Access logs
+
+This website runs on Nginx, which collects access logs by default. The logs include the IP address and the user agent of the visitor, time and date of the visit, and the exact pages visited. The user agent may include operating system, browser, browser engine and their respective versions.
+
+### Example
+```
+notthebe.ee 133.74.20.69 - - [13/Aug/2022:18:00:00 +0000] "GET /blog/set-up-your-own-vpn-on-raspberry-pi HTTP/2.0" 200 2224741 "https://notthebe.ee/blog/set-up-your-own-vpn-on-raspberry-pi/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0"
+```
+
+The access logs are cleared every day at 23:00 UTC
+## Hoster
+This website is hosted on [LiteServer.nl](https://liteserver.nl), which may also collect your personal data. You can find the privacy policy agreement on LiteServer's website: [https://liteserver.nl/privacy-policy](https://liteserver.nl/privacy-policy)
