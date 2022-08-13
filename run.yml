@@ -1,0 +1,42 @@
+---
+- hosts: localhost
+  become: no
+  tasks:
+    - name: Install Zola on the localhost
+      package:
+        name: zola
+        state: latest
+
+    - name: Build the website
+      shell:
+        cmd: "cd blog && zola build"
+
+- hosts: deploy
+  become: yes
+
+  vars_files:
+    - vars.yml
+
+  handlers:
+    - name: Restart bunkerized-nginx
+      docker_container:
+        name: bunkerized-nginx
+        restart: yes
+
+  tasks:
+    - name: Copy the www directory
+      notify: Restart bunkerized-nginx
+      synchronize:
+        src: blog/public/
+        dest: "{{ deploy_dir }}/"
+        recursive: yes
+        delete: yes
+
+    - name: Chmod the www directory
+      notify: Restart bunkerized-nginx
+      file:
+        dest: "{{ deploy_dir }}"
+        owner: root
+        group: systemd-journal
+        mode: "0755"
+        recurse: yes
