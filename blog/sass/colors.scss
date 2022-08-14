@@ -1,10 +1,10 @@
 :root {
-	--bg: #fff;
-	--fg: #2e3440;
-	--link: #5e81ac;
+    --bg: #fff;
+    --fg: #2e3440;
+    --link: #5e81ac;
     // Syntax highlighting
-	--code_fg: #4c566a;
-	--code_bg: #eceff4;
+    --code_fg: #4c566a;
+    --code_bg: #eceff4;
     --blue: #81a1c1;
     --lightblue: #609BAC;
     --cyan: #60A09C;
@@ -16,14 +16,14 @@
     --gray: #AFB5BE;
 }
 [data-theme="dark"] {
-	--bg: #242B33;
-	--fg: #eceff4;
+    --bg: #242B33;
+    --fg: #eceff4;
     // Syntax highlighting
-	--link: #81a1c1;
+    --link: #81a1c1;
     --lightblue: #88c0d0;
-	--code_fg: #d8dee9;
+    --code_fg: #d8dee9;
     --cyan: #8fbcbb;
-	--code_bg: #20262D;
+    --code_bg: #20262D;
     --green: #a3be8c;
     --gray: #616e88;
 }
