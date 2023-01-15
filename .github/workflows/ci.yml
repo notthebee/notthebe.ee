@@ -30,7 +30,7 @@ jobs:
       - name: Deploy the website
         run: >-
           ssh -p 69 $DEPLOY_USERNAME@$DEPLOY_SERVER rm -rf www/* &&
-          scp -p 69 * $DEPLOY_USERNAME@$DEPLOY_SERVER:www/
+          scp -P 69 * $DEPLOY_USERNAME@$DEPLOY_SERVER:www/
         env:
           DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
           DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
