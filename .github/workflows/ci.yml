@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: deploy
     steps:
       - name: Checkout the current branch
         uses: actions/checkout@v3
