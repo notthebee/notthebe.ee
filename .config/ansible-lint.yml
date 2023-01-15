@@ -1,0 +1,8 @@
+---
+warn_list:
+  - package-latest
+  - yaml
+skip_list:
+  - experimental
+  - name[template]
+  - no-handler

@@ -1,0 +1,27 @@
+name: CI
+run-name: Zola blog deployment
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the current branch
+        uses: actions/checkout@v3
+
+      - name: Initialize the ssh-agent
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Install Zola
+        run: sudo apt install zola
+
+      - name: Deploy the website
+        run: >-
+          ssh -p 69 $DEPLOY_USERNAME@$DEPLOY_SERVER rm www/* &&
+          scp -p 69 * $DEPLOY_USERNAME@$DEPLOY_SERVER:www/
+        env:
+          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
+          DEPLOY_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
