@@ -17,7 +17,10 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Install Zola
-        run: sudo apt install zola
+        run: sudo snap install zola --edge
+
+      - name: Build the website
+        run: zola build
 
       - name: Deploy the website
         run: >-
