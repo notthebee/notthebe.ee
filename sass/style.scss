@@ -15,8 +15,8 @@ html {
 
 body {
 	color: var(--fg);
-	font-family: 'Inter', sans-serif;
-	font-size: 16px;
+	font-family: 'PT Serif', 'Garamond', 'Georgia', serif;
+	font-size: 20px;
 	word-break: break-word;
 	line-height: 1.5em;
 	padding: 1em;
@@ -56,9 +56,10 @@ h3,
 h4,
 h5,
 h6 {
-	font-weight: 600;
+	font-weight: 700;
 	color: var(--fg);
 	line-height: 1em;
+	font-family: 'Avenir Next', 'Avenir', 'jost', 'Helvetica', 'Tahoma', sans-serif;
 }
 
 h4,
@@ -68,16 +69,20 @@ h6 {
 }
 
 h1 {
-	font-size: 1.5em;
+	font-size: 3em;
+	line-height: 1.2em;
+	margin: 0;
 }
 
 h2 {
 	margin: 2em 0 1em;
-	font-size: 1.2em;
+	font-size: 2em;
 }
 
 h3 {
-	font-size: 1em;
+	font-size: 1.2em;
+	font-weight: 600;
+	margin: 1em 0 1em;
 }
 
 h4 {
