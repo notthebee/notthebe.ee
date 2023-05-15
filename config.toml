@@ -4,7 +4,11 @@ compile_sass = true
 build_search_index = true
 generate_feed = true
 feed_filename = "rss.xml"
+default_language = "en"
 
 [markdown]
 highlight_code = true
 highlight_theme = "css"
+
+[extra]
+author = "Wolfgang"
