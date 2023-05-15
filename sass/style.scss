@@ -196,6 +196,9 @@ td {
 	div.container {
 		margin: 50px 0;
 	}
+	img {
+	  max-height: 50vh;
+  }
 }
 
 @media print {
