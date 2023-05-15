@@ -2,6 +2,8 @@ base_url = "https://notthebe.ee/"
 title = "Wolfgang's Blog"
 compile_sass = true
 build_search_index = true
+generate_feed = true
+feed_filename = "rss.xml"
 
 [markdown]
 highlight_code = true

@@ -184,6 +184,12 @@ td {
 }
 
 @media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.8em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
 	.sitename {
 		display: none;
 	}

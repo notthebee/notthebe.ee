@@ -1,5 +1,5 @@
 +++
-title = "Easy, quick and free valid SSL certificates for your homelab (using DuckDNS and ACME DNS-01)" +++
+title = "Easy, quick and free valid SSL certificates for your homelab using DuckDNS and ACME DNS-01" +++
 
 ![Jellyfin with a Let's Encrypt certificate](images/hero.png)
 
