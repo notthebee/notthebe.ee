@@ -23,10 +23,14 @@ jobs:
       - name: Build the website
         run: zola build
 
-      - name: Scan the host key
-        run: mkdir -p ~/.ssh/ && ssh-keyscan -p 69 -H $DEPLOY_SERVER >> ~/.ssh/known_hosts
+      - name: Replace the server address in knonw hosts
+        run: >-
+          sed "s/changeme/$DEPLOY_SERVER/g" -i known_hosts
         env:
           DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
+
+      - name: Scan the host key
+        run: mkdir -p ~/.ssh/ && cp known_hosts ~/.ssh/known_hosts
 
       - name: Deploy the website
         run: >-
