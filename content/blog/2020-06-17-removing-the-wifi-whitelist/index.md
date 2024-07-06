@@ -119,7 +119,7 @@ thinkpad-uefi-sign/sign.py bios_patched.img -o bios_patched.img
 And there we go, "image signed". We can also verify the image by typing:
 
 ```bash
-thinkpad-uefi-sign/sign.py bios_patched.img -o bios_patched.img
+thinkpad-uefi-sign/verify.py bios_patched.img -o bios_patched.img
 ```
 
 As you can see, it says "Signatures correct"
