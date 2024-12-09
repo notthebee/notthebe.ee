@@ -3,7 +3,7 @@ title = "Wolfgang's Blog"
 compile_sass = true
 build_search_index = true
 generate_feeds = true
-feed_filename = "rss.xml"
+feed_filenames = ["rss.xml"]
 default_language = "en"
 
 [markdown]
