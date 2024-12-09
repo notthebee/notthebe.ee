@@ -1,5 +1,5 @@
 +++
-title = "Updating the BIOS and BMC firmware on Gigabyte MC12-LE0" +++
+title = "Updating the BIOS and the BMC firmware on Gigabyte MC12-LE0" +++
 
 ![Gigabyte MC12-LE0](images/motherboard.jpg)
 
