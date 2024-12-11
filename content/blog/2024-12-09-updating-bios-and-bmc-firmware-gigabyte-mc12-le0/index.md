@@ -140,4 +140,5 @@ report that their motherboard got stuck with no output after the process was fin
 wait for ~30 minutes and reboot the board manually.
 
 Great Success!
+
 ![Updated BIOS](images/bios_updated.png)
