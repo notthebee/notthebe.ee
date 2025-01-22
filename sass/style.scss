@@ -16,7 +16,7 @@ html {
 body {
 	color: var(--fg);
 	font-family: 'PT Serif', 'Garamond', 'Georgia', serif;
-	font-size: 20px;
+	font-size: 18px;
 	word-break: break-word;
 	line-height: 1.5em;
 	padding: 1em;
@@ -76,7 +76,8 @@ h1 {
 
 h2 {
 	margin: 2em 0 1em;
-	font-size: 2em;
+	font-weight: 500;
+	font-size: 1.8em;
 }
 
 h3 {
