@@ -1,7 +1,3 @@
-Source code for my personal blog
+This project has been moved to https://git.notthebe.ee/notthebee/notthebe.ee
 
-Powered by [Zola](https://getzola.org), deployed with GitHub Actions
-
-Colors by [Nord](https://nordtheme.com) 
-
-Available at [https://notthebe.ee](https://notthebe.ee)
+For reasoning, see https://notthebe.ee/blog/moving-away-from-github/
